@@ -6,6 +6,7 @@ function UserRegistrationForm() {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [handle, setHandle] = useState('');
     const navigate = useNavigate(); // Use 'useNavigate' from v6
 
@@ -16,11 +17,12 @@ function UserRegistrationForm() {
             name: name,
             address: address,
             email: email,
-            handle: handle
+            handle: handle,
+            password: password
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/user/', payload, {
+            const response = await axios.post('http://localhost:8080/api/v1/user/register', payload, {
                 headers: {
                     'authority': 'qa-oms.msme.jswone.in',
                     'accept': 'application/json, text/plain, */*',
@@ -51,6 +53,10 @@ function UserRegistrationForm() {
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div>
                     <label>Handle:</label>
