@@ -4,6 +4,7 @@ import './App.css';
 import UserRegistrationForm from './component/UserRegistrationForm';
 import LandingPage from './component/LandingPage';
 import UserList from "./component/UserList";
+import ChatRoom from "./component/ChatRoom";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Route path="/register" element={<UserRegistrationForm />} />
                     <Route path="/landing" element={<LandingPage />} />
                     <Route path="/user-list" element={<UserList />} />
+                    <Route path="/chat-room" element={<ChatRoom />} />
                     <Route path="/" element={<UserRegistrationForm />} />
                 </Routes>
             </div>

@@ -13,6 +13,9 @@ function LandingPage() {
             <Link to="/user-list">
                 <button>User List</button>
             </Link>
+            <Link to="/chat-room">
+                <button>Chat Room</button>
+            </Link>
         </div>
     );
 }
