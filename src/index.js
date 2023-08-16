@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+document.title = 'SLiYp App';
+
 root.render(
   <React.StrictMode>
     <App />
