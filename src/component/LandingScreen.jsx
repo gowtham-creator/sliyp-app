@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom"; // Import your CSS file for stylin
 const LandingScreen = () => {
     const navigate = useNavigate();
     const handleLogoClick = () => {
-        navigate('/Home');
+        navigate('/landing-page');
     };
 
     return (

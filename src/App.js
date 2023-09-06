@@ -5,6 +5,7 @@ import UserRegistrationForm from './component/UserRegistrationForm';
 import LandingPage from './component/LandingPage';
 import UserList from "./component/UserList";
 import ChatRoom from "./component/ChatRoom";
+import LandingScreen from "./component/LandingScreen";
 
 function App() {
     return (
@@ -15,7 +16,8 @@ function App() {
                     <Route path="/landing" element={<LandingPage />} />
                     <Route path="/user-list" element={<UserList />} />
                     <Route path="/chat-room" element={<ChatRoom />} />
-                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/landing-page" element={<LandingPage />} />
+                    <Route path="/" element={<LandingScreen />} />
                 </Routes>
             </div>
         </Router>
