@@ -1,9 +1,23 @@
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mern-app:$COMMIT_SHA', '.']
 
+steps:
+
+  #test step
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/mern-app:$COMMIT_SHA']
+    entrypoint: pwd
+
+  #test step
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: ls
+
+  #building Image
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      [
+        "--dockerfile=Dockerfile-build-app",
+        "--cache=true",
+        "--cache-ttl=336h",
+        "--destination=gcr.io/$PROJECT_ID/jsw-oms-ui-prod-01:$COMMIT_SHA"
+      ]
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
