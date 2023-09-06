@@ -15,7 +15,7 @@ function App() {
                     <Route path="/landing" element={<LandingPage />} />
                     <Route path="/user-list" element={<UserList />} />
                     <Route path="/chat-room" element={<ChatRoom />} />
-                    <Route path="/" element={<UserRegistrationForm />} />
+                    <Route path="/" element={<LandingPage />} />
                 </Routes>
             </div>
         </Router>
