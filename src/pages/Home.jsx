@@ -12,7 +12,7 @@ const Home = () => {
   const { isLoggedIn } = authState;
 
   useEffect(() => {
-    document.title = authState.isLoggedIn ? `${authState.user}'s tasks` : "SLiYp";
+    document.title = authState.isLoggedIn ? `${authState.username}'s tasks` : "SLiYp";
   }, [authState]);
 
 
