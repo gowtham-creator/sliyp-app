@@ -28,7 +28,7 @@ export const postLoginData = (email, password) => async (dispatch) => {
 
 export const saveProfile = (token) => async (dispatch) => {
   try {
-    const { data } = await api.get('/profile', {
+    const { data } = await api.get('/user/profile', {
       headers: { Authorization: token }
     });
     dispatch({

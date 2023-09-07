@@ -12,7 +12,8 @@ const Tasks = () => {
   const [fetchData, { loading }] = useFetch();
 
   const fetchTasks = useCallback(() => {
-    const config = { url: "/tasks?userId="+authState.user._id, method: "get", headers: { Authorization: authState.token } };
+    console.log(authState.user)
+    const config = { url: "/user/tasks?UserId="+authState.user, method: "get", headers: { Authorization: authState.token } };
     fetchData(config, { showSuccessToast: false }).then(data => setTasks(data.tasks));
   }, [authState.token, fetchData]);
 
@@ -23,7 +24,7 @@ const Tasks = () => {
 
 
   const handleDelete = (id) => {
-    const config = { url: `/tasks/${id}`, method: "delete", headers: { Authorization: authState.token } };
+    const config = { url: `/user/tasks/${id}`, method: "delete", headers: { Authorization: authState.token } };
     fetchData(config).then(() => fetchTasks());
   }
 
@@ -46,19 +47,19 @@ const Tasks = () => {
 
             ) : (
               tasks.map((task, index) => (
-                <div key={task._id} className='bg-white my-4 p-4 text-gray-600 rounded-md shadow-md'>
+                <div key={task.id} className='bg-white my-4 p-4 text-gray-600 rounded-md shadow-md'>
                   <div className='flex'>
 
                     <span className='font-medium'>Task #{index + 1}</span>
 
                     <Tooltip text={"Edit this task"} position={"top"}>
-                      <Link to={`/tasks/${task._id}`} className='ml-auto mr-2 text-green-600 cursor-pointer'>
+                      <Link to={`/tasks/${task.id}`} className='ml-auto mr-2 text-green-600 cursor-pointer'>
                         <i className="fa-solid fa-pen"></i>
                       </Link>
                     </Tooltip>
 
                     <Tooltip text={"Delete this task"} position={"top"}>
-                      <span className='text-red-500 cursor-pointer' onClick={() => handleDelete(task._id)}>
+                      <span className='text-red-500 cursor-pointer' onClick={() => handleDelete(task.id)}>
                         <i className="fa-solid fa-trash"></i>
                       </span>
                     </Tooltip>

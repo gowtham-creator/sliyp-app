@@ -12,7 +12,7 @@ const Home = () => {
   const { isLoggedIn } = authState;
 
   useEffect(() => {
-    document.title = authState.isLoggedIn ? `${authState.user.name}'s tasks` : "SLiYp";
+    document.title = authState.isLoggedIn ? `${authState.user}'s tasks` : "SLiYp";
   }, [authState]);
 
 
@@ -30,10 +30,10 @@ const Home = () => {
           </div>
         ) : (
           <>
-            <h1 className='text-lg mt-8 mx-8 border-b border-b-gray-300'>Welcome {authState.user.name}</h1>
+            <h1 className='text-lg mt-8 mx-8 border-b border-b-gray-300'>Welcome {authState.username}</h1>
             <Tasks />
-              <GroupChat />
-              <ExternalWebsite />
+              {/*<GroupChat />*/}
+              {/*<ExternalWebsite />*/}
           </>
         )}
       </MainLayout>
