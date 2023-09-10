@@ -5,6 +5,7 @@ import Tasks from '../components/Tasks';
 import MainLayout from '../layouts/MainLayout';
 import GroupChat from "../components/GroupChat";
 import ExternalWebsite from "../components/ExternalSite";
+import UserList from "../components/UserList";
 
 const Home = () => {
 
@@ -23,6 +24,7 @@ const Home = () => {
         {!isLoggedIn ? (
           <div className='bg-primary text-white h-[40vh] py-8 text-center'>
             <h1 className='text-2xl'> Welcome to SLiYp</h1>
+
             <Link to="/signup" className='mt-10 text-xl block space-x-2 hover:space-x-4'>
               <span className='transition-[margin]'>Join now to manage your tasks</span>
               <span className='relative ml-4 text-base transition-[margin]'><i className="fa-solid fa-arrow-right"></i></span>
@@ -31,9 +33,14 @@ const Home = () => {
         ) : (
           <>
             <h1 className='text-lg mt-8 mx-8 border-b border-b-gray-300'>Welcome {authState.username}</h1>
+              <h2 className='text-lg mt-8 mx-8 border-b border-b-gray-300'> <Link to='/userlist' className='mt-4 block text-blue-500'>
+                  Go to User List
+              </Link>
+              </h2>
             <Tasks />
               {/*<GroupChat />*/}
               {/*<ExternalWebsite />*/}
+
           </>
         )}
       </MainLayout>
