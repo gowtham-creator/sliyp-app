@@ -2,19 +2,18 @@ import React from 'react';
 
 const ExternalWebsite = () => {
     // Define the URL of the external website
-    const externalUrl = 'http://localhost:3001/';
+    const externalUrl = 'http://localhost:8080';
+
+    // Open the external website in a new tab
+    const openWebsiteInNewTab = () => {
+        window.open(externalUrl, '_blank');
+    };
 
     return (
         <div>
             <h2>Group Chat Service</h2>
 
-            <iframe
-                title="GrouptExternal Website"
-                src={externalUrl}
-                width="100%"
-                height="500px"
-                allow="fullscreen"
-            />
+            <button onClick={openWebsiteInNewTab}>Open in new tab</button>
         </div>
     );
 };

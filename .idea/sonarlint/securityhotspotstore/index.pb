@@ -15,8 +15,6 @@ O
 src/components/utils/Loader.jsx,3/0/3048f4aa731978ece9699fce6dc0e8bf14ef140b
 P
  src/components/utils/Tooltip.jsx,6/f/6fab18710aec9a3b17ce43fb3084f9930a2e87f2
-O
-src/components/ExternalSite.jsx,e/9/e98593aa907d204c841eead7720efbaf89b92e5b
 L
 src/components/GroupChat.jsx,4/2/425cfac62c08017219def83fed6250224dab68ad
 P

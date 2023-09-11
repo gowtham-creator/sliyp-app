@@ -37,6 +37,10 @@ const Home = () => {
                   Go to User List
               </Link>
               </h2>
+              <h3 className='text-lg mt-8 mx-8 border-b border-b-gray-300'> <Link to='/groupChat' className='mt-4 block text-blue-500'>
+                  Go to Group Chat
+              </Link>
+              </h3>
             <Tasks />
               {/*<GroupChat />*/}
               {/*<ExternalWebsite />*/}
