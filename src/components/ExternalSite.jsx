@@ -2,7 +2,7 @@ import React from 'react';
 
 const ExternalWebsite = () => {
     // Define the URL of the external website
-    const externalUrl = 'http://localhost:8080';
+    const externalUrl = 'https://user-service-ib7aiys5la-el.a.run.app/';
 
     // Open the external website in a new tab
     const openWebsiteInNewTab = () => {
