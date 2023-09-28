@@ -54,13 +54,13 @@ const Tasks = () => {
 
                     <Tooltip text={"Edit this task"} position={"top"}>
                       <Link to={`/tasks/${task.id}`} className='ml-auto mr-2 text-green-600 cursor-pointer'>
-                        <i className="fa-solid fa-pen"></i>
+                        <i className="fa-solid fa-pen">edit</i>
                       </Link>
                     </Tooltip>
 
                     <Tooltip text={"Delete this task"} position={"top"}>
                       <span className='text-red-500 cursor-pointer' onClick={() => handleDelete(task.id)}>
-                        <i className="fa-solid fa-trash"></i>
+                        <i className="fa-solid fa-trash">delete</i>
                       </span>
                     </Tooltip>
 
