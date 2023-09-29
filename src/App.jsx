@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingScreen />} />
           <Route path="/Home" element={<Home />} />
-          <Route path="/signup" element={authState.isLoggedIn ? <Navigate to="/" /> : <Signup />} />
+          <Route path="/signup" element={authState.isLoggedIn ? <Navigate to="/Home" /> : <Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/tasks/add" element={authState.isLoggedIn ? <Task /> : <Navigate to="/login" state={{ redirectUrl: "/tasks/add" }} />} />
           <Route path="/tasks/:taskId" element={authState.isLoggedIn ? <Task /> : <Navigate to="/login" state={{ redirectUrl: window.location.pathname }} />} />
