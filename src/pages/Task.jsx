@@ -14,28 +14,43 @@ const Task = () => {
   const [fetchData, { loading }] = useFetch();
   const { taskId } = useParams();
 
-  const mode = taskId === undefined ? "add" : "update";
+  console.log(taskId)
+
+  const mode = (taskId === undefined) ? "add" : "update";
+
   const [task, setTask] = useState(null);
+  const [defaulttask, setDefaulttask] = useState(null);
   const [formData, setFormData] = useState({
     description: ""
   });
   const [formErrors, setFormErrors] = useState({});
 
 
+
+
+
   useEffect(() => {
+  
     document.title = mode === "add" ? "Add task" : "Update Task";
   }, [mode]);
 
-
   useEffect(() => {
     if (mode === "update") {
+    
       const config = { url: `/tasks/${taskId}`, method: "get", headers: { Authorization: authState.token } };
       fetchData(config, { showSuccessToast: false }).then((data) => {
-        setTask(data.task);
-        setFormData({ description: data.task.description });
+        document.title = mode === "add" ? "Add task" : "apdate Task";
+
+        setTask(data.description);
+        setDefaulttask(data.description);
+        setFormData({ description: data.description });
       });
     }
   }, [mode, authState, taskId, fetchData]);
+
+
+
+
 
 
 
@@ -48,7 +63,7 @@ const Task = () => {
   const handleReset = e => {
     e.preventDefault();
     setFormData({
-      description: task.description
+      description: defaulttask.description
     });
   }
 
@@ -63,15 +78,15 @@ const Task = () => {
     }
 
     if (mode === "add") {
-      const config = { url: "/user/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: authState.token } };
+      const config = { url: "/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: authState.token } };
       fetchData(config).then(() => {
-        navigate("/");
+        navigate("/Home");
       });
     }
     else {
-      const config = { url: `/user/tasks/${taskId}`, method: "put", data: formData, headers: { Authorization: authState.token } };
+      const config = { url: `/tasks/${taskId}`, method: "put", data: formData, headers: { Authorization: authState.token } };
       fetchData(config).then(() => {
-        navigate("/");
+        navigate("/Home");
       });
     }
   }
@@ -100,7 +115,7 @@ const Task = () => {
               </div>
 
               <button className='bg-primary text-white px-4 py-2 font-medium hover:bg-primary-dark' onClick={handleSubmit}>{mode === "add" ? "Add task" : "Update Task"}</button>
-              <button className='ml-4 bg-red-500 text-white px-4 py-2 font-medium' onClick={() => navigate("/")}>Cancel</button>
+              <button className='ml-4 bg-red-500 text-white px-4 py-2 font-medium' onClick={() => navigate("/Home")}>Cancel</button>
               {mode === "update" && <button className='ml-4 bg-blue-500 text-white px-4 py-2 font-medium hover:bg-blue-600' onClick={handleReset}>Reset</button>}
             </>
           )}
