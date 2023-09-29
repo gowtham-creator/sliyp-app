@@ -13,7 +13,7 @@ const Tasks = () => {
 
   const fetchTasks = useCallback(() => {
     console.log(authState.user)
-    const config = { url: "/user/tasks?UserId="+authState.user, method: "get", headers: { Authorization: authState.token } };
+    const config = { url: "/tasks?UserId="+authState.user, method: "get", headers: { Authorization: authState.token } };
     fetchData(config, { showSuccessToast: false }).then(data => setTasks(data.tasks));
   }, [authState.token, fetchData]);
 
@@ -24,7 +24,7 @@ const Tasks = () => {
 
 
   const handleDelete = (id) => {
-    const config = { url: `/user/tasks/${id}`, method: "delete", headers: { Authorization: authState.token } };
+    const config = { url: `/tasks/${id}`, method: "delete", headers: { Authorization: authState.token } };
     fetchData(config).then(() => fetchTasks());
   }
 
