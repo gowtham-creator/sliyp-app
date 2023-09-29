@@ -65,13 +65,13 @@ const Task = () => {
     if (mode === "add") {
       const config = { url: "/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: authState.token } };
       fetchData(config).then(() => {
-        navigate("/");
+        navigate("/Home");
       });
     }
     else {
       const config = { url: `/tasks/${taskId}`, method: "put", data: formData, headers: { Authorization: authState.token } };
       fetchData(config).then(() => {
-        navigate("/");
+        navigate("/Home");
       });
     }
   }
