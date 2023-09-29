@@ -14,28 +14,43 @@ const Task = () => {
   const [fetchData, { loading }] = useFetch();
   const { taskId } = useParams();
 
-  const mode = taskId === undefined ? "add" : "update";
+  console.log(taskId)
+
+  const mode = (taskId === undefined) ? "add" : "update";
+
   const [task, setTask] = useState(null);
+  const [defaulttask, setDefaulttask] = useState(null);
   const [formData, setFormData] = useState({
     description: ""
   });
   const [formErrors, setFormErrors] = useState({});
 
 
+
+
+
   useEffect(() => {
+  
     document.title = mode === "add" ? "Add task" : "Update Task";
   }, [mode]);
 
-
   useEffect(() => {
     if (mode === "update") {
+    
       const config = { url: `/tasks/${taskId}`, method: "get", headers: { Authorization: authState.token } };
       fetchData(config, { showSuccessToast: false }).then((data) => {
-        setTask(data.task);
-        setFormData({ description: data.task.description });
+        document.title = mode === "add" ? "Add task" : "apdate Task";
+
+        setTask(data.description);
+        setDefaulttask(data.description);
+        setFormData({ description: data.description });
       });
     }
   }, [mode, authState, taskId, fetchData]);
+
+
+
+
 
 
 
@@ -48,7 +63,7 @@ const Task = () => {
   const handleReset = e => {
     e.preventDefault();
     setFormData({
-      description: task.description
+      description: defaulttask.description
     });
   }
 

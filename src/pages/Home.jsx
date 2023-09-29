@@ -20,7 +20,7 @@ const Home = () => {
 
     // Open the external website in a new tab
     const openWebsiteInNewTab = () => {
-        window.open(externalUrl, '_blank');
+        window.open(externalUrl, '_selfn');
     };
 
 
