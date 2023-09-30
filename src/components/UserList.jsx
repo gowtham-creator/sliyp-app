@@ -13,7 +13,7 @@ const UserList = () => {
         const config = {
             url: "/user/all", // Replace with your API endpoint
             method: "get",
-            headers: { Authorization: authState.token }
+            headers: { Authorization: "Bearer "+authState.token }
         };
 
         fetchData(config, { showSuccessToast: false }).then(data => setUsers(data));

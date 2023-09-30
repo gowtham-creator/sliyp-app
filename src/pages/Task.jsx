@@ -37,7 +37,7 @@ const Task = () => {
   useEffect(() => {
     if (mode === "update") {
     
-      const config = { url: `/tasks/${taskId}`, method: "get", headers: { Authorization: authState.token } };
+      const config = { url: `/tasks/${taskId}`, method: "get", headers: { Authorization: "Bearer "+authState.token } };
       fetchData(config, { showSuccessToast: false }).then((data) => {
         document.title = mode === "add" ? "Add task" : "apdate Task";
 
@@ -78,13 +78,13 @@ const Task = () => {
     }
 
     if (mode === "add") {
-      const config = { url: "/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: authState.token } };
+      const config = { url: "/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: "Bearer "+authState.token } };
       fetchData(config).then(() => {
         navigate("/Home");
       });
     }
     else {
-      const config = { url: `/tasks/${taskId}`, method: "put", data: formData, headers: { Authorization: authState.token } };
+      const config = { url: `/tasks/${taskId}`, method: "put", data: formData, headers: { Authorization: "Bearer "+authState.token } };
       fetchData(config).then(() => {
         navigate("/Home");
       });
