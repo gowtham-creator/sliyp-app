@@ -1,6 +1,7 @@
 import api from "../../api"
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SAVE_PROFILE } from "./actionTypes"
 import { toast } from "react-toastify";
+import {useSelector} from "react-redux";
 
 export const postLoginData = (email, password,otp) => async (dispatch) => {
   try {
@@ -28,7 +29,8 @@ export const postLoginData = (email, password,otp) => async (dispatch) => {
 
 export const saveProfile = (token) => async (dispatch) => {
   try {
-    const { data } = await api.get('/user/profilee/bhuvaneswarsankranthi@gmail.com', {
+    const authState = useSelector(state => state.authReducer);
+    const { data } = await api.get('/user/profilee/'+authState.email, {
       headers: { Authorization: "Bearer "+token }
     });
     dispatch({
