@@ -16,7 +16,7 @@ export const postLoginData = (email, password,otp) => async (dispatch) => {
 
   }
   catch (error) {
-    const msg = error.response?.data?.msg || error.message;
+    const msg = error.response?.data || error.message;
     dispatch({
       type: LOGIN_FAILURE,
       payload: { msg }
