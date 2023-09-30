@@ -6,7 +6,7 @@ const ExternalWebsite = () => {
 
     // Open the external website in a new tab
     const openWebsiteInNewTab = () => {
-        window.open(externalUrl, '_blank');
+        window.open(externalUrl, '_self');
     };
 
     return (

@@ -13,7 +13,7 @@ const Tasks = () => {
 
   const fetchTasks = useCallback(() => {
     console.log(authState.user)
-    const config = { url: "/tasks?UserId="+authState.user, method: "get", headers: { Authorization: "Bearer "+authState.token } };
+    const config = { url: "/tasks", method: "get", headers: { Authorization: "Bearer "+authState.token } };
     fetchData(config, { showSuccessToast: false }).then(data => setTasks(data.tasks));
   }, [authState.token, fetchData]);
 

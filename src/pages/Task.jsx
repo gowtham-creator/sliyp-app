@@ -78,7 +78,7 @@ const Task = () => {
     }
 
     if (mode === "add") {
-      const config = { url: "/tasks?UserId="+authState.user, method: "post", data: formData, headers: { Authorization: "Bearer "+authState.token } };
+      const config = { url: "/tasks", method: "post", data: formData, headers: { Authorization: "Bearer "+authState.token } };
       fetchData(config).then(() => {
         navigate("/Home");
       });
