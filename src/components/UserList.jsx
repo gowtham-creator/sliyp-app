@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useFetch from '../hooks/useFetch';
 import Loader from './utils/Loader';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../css/UserList.css';
 
 const UserList = () => {
@@ -23,31 +24,33 @@ const UserList = () => {
         fetchUsers();
     }, [fetchUsers]);
 
-
     return (
-        <div className="user-list"> {/* Apply the user-list class */}
-            <h2>User List</h2>
+        <div className="user-list">
+            <h2><i className="fas fa-users"></i> User List</h2>
             {loading ? (
                 <Loader />
             ) : (
                 <table>
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        {/* Add more table headers for additional user properties */}
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th><i className="fas fa-user"></i> Name</th>
+                            <th><i className="fas fa-envelope"></i> Email</th>
+                            {/* Add more table headers for additional user properties */}
+                        </tr>
                     </thead>
                     <tbody>
-                    {users.map(user => (
-                        <tr key={user.ref}>
-                            <td>{user.ref}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            {/* Add more table cells for additional user properties */}
-                        </tr>
-                    ))}
+                        {users.map(user => (
+                            <tr key={user.ref}>
+                                <td>{user.ref}</td>
+                                <td>
+                                    {/* Wrap the user name in a Link */}
+                                    <Link to={`/userprofile`}>{user.name}</Link>
+                                </td>
+                                <td>{user.email}</td>
+                                {/* Add more table cells for additional user properties */}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             )}
@@ -56,5 +59,3 @@ const UserList = () => {
 }
 
 export default UserList;
-
-

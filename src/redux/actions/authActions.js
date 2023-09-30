@@ -2,10 +2,10 @@ import api from "../../api"
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SAVE_PROFILE } from "./actionTypes"
 import { toast } from "react-toastify";
 
-export const postLoginData = (email, password) => async (dispatch) => {
+export const postLoginData = (email, password,otp) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-    const { data } = await api.post('/user/login', { email, password });
+    const { data } = await api.post('/user/login', { email, password,otp });
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data,
