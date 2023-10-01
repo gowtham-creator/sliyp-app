@@ -29,8 +29,7 @@ export const postLoginData = (email, password,otp) => async (dispatch) => {
 
 export const saveProfile = (token) => async (dispatch) => {
   try {
-    const authState = useSelector(state => state.authReducer);
-    const { data } = await api.get('/user/profilee/'+authState.email, {
+    const { data } = await api.get('/user/profile', {
       headers: { Authorization: "Bearer "+token }
     });
     dispatch({
