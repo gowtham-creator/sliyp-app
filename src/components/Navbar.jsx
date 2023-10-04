@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../redux/actions/authActions';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const Navbar = () => {
 
