@@ -12,6 +12,7 @@ import LandingScreen   from "./components/LandingScreen";
 import UserList from "./components/UserList";
 import UserProfile from "./components/UserProfile";
 import ExternalWebsite from "./components/ExternalSite";
+import Tasks from "./components/Tasks";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/tasks/:taskId" element={authState.isLoggedIn ? <Task /> : <Navigate to="/login" state={{ redirectUrl: window.location.pathname }} />} />
           <Route path="/userList" element={<UserList/>}/>
           <Route path="/userprofile" element={<UserProfile/>}/>
+          <Route path="/tasks" element={<Tasks/>}/>
           <Route path="/groupChat" element={<ExternalWebsite/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>

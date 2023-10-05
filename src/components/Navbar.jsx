@@ -21,7 +21,7 @@ const Navbar = () => {
     <>
       <header className='flex justify-between sticky top-0 p-4 bg-white shadow-sm items-center'>
         <h2 className='cursor-pointer  font-extrabold font-sans'>
-          <Link to="/"> SLiYp </Link>
+          <Link to=""> SLiYp </Link>
         </h2>
         <ul className='hidden md:flex gap-4 uppercase font-medium'>
           {authState.isLoggedIn ? (
