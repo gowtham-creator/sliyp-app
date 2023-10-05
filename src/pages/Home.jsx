@@ -22,18 +22,26 @@ const Home = () => {
         window.open(externalUrl, '_selfn');
     };
 
-    const [activeComponent, setActiveComponent] = useState(null);
+    const [showUserList, setShowUserList] = useState(false);
+    const [showGroupChat, setShowGroupChat] = useState(false);
+    const [showTasks, setShowTasks] = useState(false);
 
-    const openUserList = () => {
-        setActiveComponent('UserList');
+    const toggleUserList = () => {
+        setShowUserList(!showUserList);
+        setShowGroupChat(false); // Close the other components
+        setShowTasks(false);
     };
 
-    const openGroupChat = () => {
-        setActiveComponent('GroupChat');
+    const toggleGroupChat = () => {
+        setShowGroupChat(!showGroupChat);
+        setShowUserList(false); // Close the other components
+        setShowTasks(false);
     };
 
-    const openTasks = () => {
-        setActiveComponent('Tasks');
+    const toggleTasks = () => {
+        setShowTasks(!showTasks);
+        setShowUserList(false); // Close the other components
+        setShowGroupChat(false);
     };
 
     return (
@@ -44,13 +52,13 @@ const Home = () => {
                         {/* Sidebar */}
                         <h1 className='text-lg'>Welcome {authState.username}</h1>
                         <h2 className='text-lg mt-4'>
-                            <button onClick={openUserList}>Open User List</button>
+                            <button onClick={toggleUserList}>Toggle User List</button>
                         </h2>
                         <h3 className='text-lg mt-4'>
-                            <button onClick={openGroupChat}>Open Group Chat</button>
+                            <button onClick={toggleGroupChat}>Toggle Group Chat</button>
                         </h3>
                         <h2 className='text-lg mt-4'>
-                            <button onClick={openTasks}>Open User Tasks</button>
+                            <button onClick={toggleTasks}>Toggle User Tasks</button>
                         </h2>
                     </div>
                     <div className="w-3/4 p-4">
@@ -58,10 +66,10 @@ const Home = () => {
                         {isLoggedIn ? (
                             <>
                                 <h1 className='text-lg mt-8 border-b border-b-gray-300'>Welcome {authState.username}</h1>
-                                {/* Render the active component */}
-                                {activeComponent === 'UserList' && <UserList />}
-                                {activeComponent === 'GroupChat' && <GroupChat />}
-                                {activeComponent === 'Tasks' && <Tasks />}
+                                {/* Include components in the main content area */}
+                                {showUserList && <UserList />}
+                                {showGroupChat && <GroupChat />}
+                                {showTasks && <Tasks />}
                             </>
                         ) : (
                             <div className='bg-primary text-white h-[40vh] py-8 text-center'>
