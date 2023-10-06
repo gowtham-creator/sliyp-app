@@ -34,7 +34,7 @@ export const saveProfile = (token) => async (dispatch) => {
     });
     dispatch({
       type: SAVE_PROFILE,
-      payload: { user: data.user, token },
+      payload: { user: data, token },
     });
   }
   catch (error) {

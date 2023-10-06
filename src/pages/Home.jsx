@@ -6,6 +6,7 @@ import MainLayout from '../layouts/MainLayout';
 import GroupChat from "../components/GroupChat";
 import ExternalWebsite from "../components/ExternalSite";
 import UserList from "../components/UserList";
+import UserProfile from "../components/UserProfile";
 
 const Home = () => {
     const authState = useSelector(state => state.authReducer);
@@ -25,23 +26,33 @@ const Home = () => {
     const [showUserList, setShowUserList] = useState(false);
     const [showGroupChat, setShowGroupChat] = useState(false);
     const [showTasks, setShowTasks] = useState(false);
+    const [showUserProfile, setShowUserProfile] = useState(false);
 
     const toggleUserList = () => {
         setShowUserList(!showUserList);
         setShowGroupChat(false); // Close the other components
         setShowTasks(false);
+        setShowUserProfile(false);
     };
 
     const toggleGroupChat = () => {
         setShowGroupChat(!showGroupChat);
         setShowUserList(false); // Close the other components
         setShowTasks(false);
+        setShowUserProfile(false);
     };
 
     const toggleTasks = () => {
         setShowTasks(!showTasks);
         setShowUserList(false); // Close the other components
         setShowGroupChat(false);
+        setShowUserProfile(false);
+    };
+    const toggleUserProfile = () => {
+        setShowTasks(false);
+        setShowUserList(false); // Close the other components
+        setShowGroupChat(false);
+        setShowUserProfile(!showUserProfile);
     };
 
     return (
@@ -52,13 +63,16 @@ const Home = () => {
                         {/* Sidebar */}
                         <h1 className='text-lg'>Welcome {authState.username}</h1>
                         <h2 className='text-lg mt-4'>
-                            <button onClick={toggleUserList}>Toggle User List</button>
+                            <button onClick={toggleUserList}> User List</button>
                         </h2>
                         <h3 className='text-lg mt-4'>
-                            <button onClick={toggleGroupChat}>Toggle Group Chat</button>
+                            <button onClick={toggleGroupChat}> Group Chat</button>
                         </h3>
                         <h2 className='text-lg mt-4'>
-                            <button onClick={toggleTasks}>Toggle User Tasks</button>
+                            <button onClick={toggleTasks}> My Tasks</button>
+                        </h2>
+                        <h2 className='text-lg mt-4'>
+                            <button onClick={toggleUserProfile}> My Profile</button>
                         </h2>
                     </div>
                     <div className="w-3/4 p-4">
@@ -70,6 +84,7 @@ const Home = () => {
                                 {showUserList && <UserList />}
                                 {showGroupChat && <GroupChat />}
                                 {showTasks && <Tasks />}
+                                {showUserProfile && <UserProfile email='mallepally.shashikanthh@yahoo.com' />}
                             </>
                         ) : (
                             <div className='bg-primary text-white h-[40vh] py-8 text-center'>

@@ -1,103 +1,103 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-//
-// const UserProfile = () => {
-//   const [user, setUser] = useState({});
-//   const [loading, setLoading] = useState(true);
-//
-//   useEffect(() => {
-//     axios.get('YOUR_API_ENDPOINT')
-//       .then((response) => {
-//         setUser(response.data);
-//         setLoading(false);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching user data:', error);
-//         setLoading(false);
-//       });
-//   }, []);
-//
-//   return (
-//     <div>
-//       <h1>User Profile</h1>
-//       {loading ? (
-//         <p>Loading...</p>
-//       ) : (
-//         <div>
-//           <p>Name: {user.name}</p>
-//           <p>Email: {user.email}</p>
-//           <p>Joining Time: {new Date(user.joiningTime).toLocaleString()}</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-//
-// export default UserProfile;
+import React, { useState, useEffect } from 'react';
+import '../css/UserProfile.css';
+import {useSelector} from "react-redux";
+import api from "../api";
 
-// UserProfile.js
+function UserProfile({ email }) {
 
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import '../css/userprofile.css'
-
-const UserProfile = () => {
-    const { userId } = useParams();
+    const [userProfile, setUserProfile] = useState(null);
     const authState = useSelector(state => state.authReducer);
-    const userProfile = useSelector(state => state.userProfileReducer);
-    
-    // Define your Redux state for user profiles
+    const [profileImage, setProfileImage] = useState(null);
 
-    // Simulate fetching user profile data based on userId (replace with actual API call)
+
     useEffect(() => {
-        // Simulate fetching user profile data from your API based on the userId parameter
-        // Update the userProfile state in Redux with the fetched data
-        const userProfile = {
-            username: 'ExampleUser',
-            profileImage: 'example.jpg',
-            followersCount: 100,
-            followingCount: 50,
-            isFollowed: false, // You can set this based on your logic
+        const fetchUserProfile = async () => {
+            try {
+                const response = await api.get(`/user/profile`,
+                    { headers: { Authorization: "Bearer " + authState.token } });
+                const userProfileData = response.data;
+                setUserProfile(userProfileData);
+
+
+                if (userProfileData.profileImgId) {
+                    const imageResp = await api.get(`/image/${userProfileData.profileImgId}`, {
+                        headers: { Authorization: "Bearer " + authState.token },
+                        responseType: 'arraybuffer',
+                    });
+
+                    if (imageResp.data && imageResp.data.byteLength > 0) {
+                        // Convert binary data to base64
+                        const imageBytes = new Uint8Array(imageResp.data);
+                        const base64String = btoa(
+                            String.fromCharCode.apply(null, imageBytes)
+                        );
+                        //console.log('Base64 Image String:', base64String);
+
+                        setProfileImage(`data:image/jpeg;base64,${base64String}`);
+                    } else {
+                        console.error('Empty or invalid image data received.');
+                    }
+                } else {
+                    console.error('No profile image ID found in user data.');
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
         };
-        
-        // Update the userProfile state (replace with your Redux action)
-        // dispatch(updateUserProfile(fetchedUserProfile));
-    }, [userId]);
 
-    // Simulate follow/unfollow actions (replace with your logic)
-    const handleFollow = () => {
-        // Perform follow action here
-        // Update the isFollowed state
-        // For example: setFollowStatus(true);
-    };
+        fetchUserProfile();
+    }, [email, authState.token]);
+    if (!userProfile) {
+        return <div>Loading...</div>;
+    }
 
-    const handleUnfollow = () => {
-        // Perform unfollow action here
-        // Update the isFollowed state
-        // For example: setFollowStatus(false);
-    };
+    const handleImageSelect = async (event) => {
+        const file = event.target.files[0];
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('img-type','USER_PROFILE')
+
+        const imageUploadResp= await api.post('image', formData,{headers: { Authorization: "Bearer " + authState.token },
+            responseType: 'arraybuffer',}, { showSuccessToast: true });
+
+        console.log(imageUploadResp);
+    }
 
     return (
         <div className="user-profile">
-            <div className="profile-header">
-                <img src={"src"} alt={"userProfile.username"} />
-                <h2>{"username"}</h2>
-                <p>Followers: {"userProfile.followersCount"}</p>
-                <p>Following: {"userProfile.followingCount"}</p>
-                {authState.userId !== userId ? (
-                    userProfile.isFollowed ? (
-                        <button onClick={handleUnfollow}>Unfollow</button>
-                    ) : (
-                        <button onClick={handleFollow}>Follow</button>
-                    )
-                ) : null}
+            <div className="profile-header" onClick={() => document.getElementById('image-input').click()}>
+                {profileImage && (
+                    <img src={profileImage} alt="Profile"  className="profile-image"  />
+                )}
+
+                {/* Hidden input for selecting an image */}
+                <input
+                    type="file"
+                    id="image-input"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                    style={{ display: 'none' }}
+                />
+
+                <h2 className="profile-name">{userProfile.name}
+                    <p className="profile-handle">@{userProfile.handle}</p>
+                </h2>
+
             </div>
-            {/* Add more user details here */}
+            <div className="profile-details">
+                <div className="detail">
+                    <span className="label">Email:</span>
+                    <span className="value">{userProfile.email}</span>
+                </div>
+                <div className="detail">
+                    <span className="label">Address:</span>
+                    <span className="value">{userProfile.address}</span>
+                </div>
+                {/* Add more profile information as needed */}
+            </div>
         </div>
     );
 }
 
 export default UserProfile;
-
-
