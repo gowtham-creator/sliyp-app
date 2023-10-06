@@ -9,6 +9,8 @@ const Navbar = () => {
   const authState = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+
+  const [profileImages, setProfileImages] = useState({});
   const toggleNavbar = () => {
     setIsNavbarOpen(!isNavbarOpen);
   }
@@ -21,7 +23,7 @@ const Navbar = () => {
     <>
       <header className='flex justify-between sticky top-0 p-4 bg-white shadow-sm items-center'>
         <h2 className='cursor-pointer  font-extrabold font-sans'>
-          <Link to=""> SLiYp </Link>
+          <Link to="/Home"> SLiYp </Link>
         </h2>
         <ul className='hidden md:flex gap-4 uppercase font-medium'>
           {authState.isLoggedIn ? (
@@ -29,6 +31,7 @@ const Navbar = () => {
               <li className="bg-blue-500 text-white hover:bg-blue-600 font-medium rounded-md">
                 <Link to='/tasks/add' className='block w-full h-full px-4 py-2'> <i className="fa-solid fa-plus"></i> Add task </Link>
               </li>
+
               <li className='py-2 px-3 cursor-pointer hover:bg-gray-200 transition rounded-sm' onClick={handleLogoutClick}>Logout</li>
             </>
           ) : (

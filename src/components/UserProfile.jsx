@@ -67,8 +67,10 @@ function UserProfile({ email }) {
     return (
         <div className="user-profile">
             <div className="profile-header" onClick={() => document.getElementById('image-input').click()}>
-                {profileImage && (
-                    <img src={profileImage} alt="Profile"  className="profile-image"  />
+                {profileImage ? (
+                    <img src={profileImage} alt="Profile" className="profile-image" />
+                ) : (
+                    <img src= "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="Default Profile" className="profile-image" />
                 )}
 
                 {/* Hidden input for selecting an image */}

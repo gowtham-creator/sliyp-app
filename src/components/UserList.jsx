@@ -87,10 +87,16 @@ const UserList = () => {
                             </td>
                             <td>{user.email}</td>
                             <td>
-                                {profileImages[user.ref] && (
+                                {profileImages[user.ref] ? (
                                     <img
                                         src={profileImages[user.ref]}
                                         alt={`${user.name}'s Profile`}
+                                        className="profile-image-small"
+                                    />
+                                ) : (
+                                    <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                                        alt="Default Profile"
                                         className="profile-image-small"
                                     />
                                 )}
