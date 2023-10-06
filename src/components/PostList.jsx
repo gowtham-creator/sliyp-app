@@ -3,6 +3,7 @@ import api from '../api'; // Import your API module
 import PostCard from './PostCard';
 import {useSelector} from "react-redux";
 import  "../css/posts.css";
+import CreatePost from "./CreatePost";
 
 
 function PostList() {
@@ -26,6 +27,9 @@ function PostList() {
 
     return (
         <div className="post-list">
+            <div className="post-card">
+                <CreatePost/>
+            </div>
             {posts.map((post) => (
                 <PostCard key={post.id} post={post} />
             ))}
