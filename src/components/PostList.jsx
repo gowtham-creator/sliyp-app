@@ -12,7 +12,7 @@ function PostList() {
 
     const fetchPosts = async (page) => {
         try {
-            const response = await api.get(`/post?page=${page}&size=1`, {
+            const response = await api.get(`/post?page=${page}&size=5`, {
                 headers: { Authorization: 'Bearer ' + authState.token }
             });
             setPosts(response.data);
