@@ -8,16 +8,14 @@ import CreatePost from './CreatePost';
 function PostList() {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
     const authState = useSelector((state) => state.authReducer);
 
     const fetchPosts = async (page) => {
         try {
-            const response = await api.get(`/post?page=${page}&size=5`, {
+            const response = await api.get(`/post?page=${page}&size=1`, {
                 headers: { Authorization: 'Bearer ' + authState.token }
             });
-            setPosts(response.data.content);
-            setTotalPages(response.data.totalPages);
+            setPosts(response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
@@ -28,14 +26,12 @@ function PostList() {
     }, [currentPage, authState.token]);
 
     const nextPage = () => {
-        if (currentPage < totalPages - 1) {
-            setCurrentPage(currentPage + 1);
-        }
+        setCurrentPage((prevPage) => prevPage + 1);
     };
 
     const prevPage = () => {
         if (currentPage > 0) {
-            setCurrentPage(currentPage - 1);
+            setCurrentPage((prevPage) => prevPage - 1);
         }
     };
 
@@ -44,8 +40,8 @@ function PostList() {
             <div className="post-card">
                 <CreatePost />
             </div>
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+            {posts.map((post, index) => (
+                <PostCard key={index} post={post} />
             ))}
 
             <div className="pagination">
@@ -53,11 +49,8 @@ function PostList() {
                     Previous
                 </button>
                 <span>Page {currentPage + 1}</span>
-                <button onClick={nextPage} disabled={currentPage === totalPages - 1}>
-                    Next
-                </button>
+                <button onClick={nextPage}>Next</button>
             </div>
-
         </div>
     );
 }

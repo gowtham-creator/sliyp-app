@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 function PostCard({ post }) {
     const [postImage, setPostImage] = useState(null);
+    const [userImage, setUserImage] = useState(null);
     const authState = useSelector(state => state.authReducer);
 
     useEffect(() => {
@@ -31,26 +32,54 @@ function PostCard({ post }) {
                 } else if (!post.imageUrl) {
                     console.error('No image URL found in post data.');
                 }
+
+
+                if(post.AuthorProfileImgId && !userImage){
+                    const imageResp = await api.get(`/image/${post.AuthorProfileImgId}`, {
+                        headers: { Authorization: "Bearer " + authState.token },
+                        responseType: 'arraybuffer',
+                    });
+
+                    if (imageResp.data && imageResp.data.byteLength > 0) {
+                        // Convert binary data to base64
+                        const imageBytes = new Uint8Array(imageResp.data);
+                        const base64String = btoa(
+                            String.fromCharCode.apply(null, imageBytes)
+                        );
+                        setUserImage(`data:image/jpeg;base64,${base64String}`);
+                    } else {
+                        console.error('Empty or invalid image data received.');
+                    }
+                } else if (!post.AuthorProfileImgId) {
+                    console.error('No image URL found in post data.');
+                }
+
+
             } catch (error) {
                 console.error('Error fetching post image:', error);
             }
         };
 
         fetchPostImage();
-    }, [authState.token, post, postImage]);
+    }, [authState.token, post, postImage,userImage]);
 
     return (
         <div className="post-card">
             <div className="post-header">
                 <div className="user-info">
-                    <img
+                    {userImage ?
+                        (<img
+                        src={userImage}
+                        alt={`shashi's Icon`}
+                        className="profile-image-small"
+                    />): (<img
                         src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
                         alt={`shashi's Icon`}
                         className="profile-image-small"
-                    />
+                    />)}
                     <div className="user-details">
-                        <h2 className="user-name">shashikanth</h2>
-                        <p className="user-handle">@shashikanth</p>
+                        <h2 className="user-name">{post.AuthorName}</h2>
+                        <p className="user-handle">@{post.AuthorHandle}</p>
                     </div>
                 </div>
             </div>
