@@ -64,7 +64,7 @@ function CreatePost() {
         } catch (error) {
             console.error('Error creating post:', error);
         }
-       window.location.reload();
+       //window.location.reload();
     };
 
     return (
