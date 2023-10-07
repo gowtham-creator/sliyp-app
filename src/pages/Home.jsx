@@ -55,7 +55,7 @@ const Home = () => {
                                 <h1 className='text-lg mt-8 border-b border-b-gray-300'>Welcome {authState.username}</h1>
                                 {selectedView === 'MyPosts' && <PostList />}
                                 {selectedView === 'UserList' && <UserList />}
-                                {selectedView === 'GroupChat' && <GroupChat />}
+                                {selectedView === 'GroupChat' && <ExternalWebsite />}
                                 {selectedView === 'Tasks' && <Tasks />}
                                 {selectedView === 'UserProfile' && <UserProfile email='mallepally.shashikanthh@yahoo.com' />}
                             </>
