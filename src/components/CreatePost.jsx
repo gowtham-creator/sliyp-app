@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/CreatePost.css';
-import {useSelector} from "react-redux";
-import api from "../api";
+import { useSelector } from 'react-redux';
+import api from '../api';
 
 function CreatePost() {
     const [post, setPost] = useState({
@@ -25,6 +25,37 @@ function CreatePost() {
         setImageFile(file);
     };
 
+    useEffect(() => {
+        // When the imageUrl changes, send the POST request if both writeUp and imageUrl are available
+        if (post.imageUrl && post.writeUp) {
+            createPost();
+        }
+    }, [post.imageUrl]);
+
+    const createPost = async () => {
+        try {
+            // Send a POST request to your API endpoint to create the post
+            const response = await api.post('/post', post, {
+                headers: {
+                    Authorization: 'Bearer ' + authState.token,
+                },
+            });
+
+            if (response.ok) {
+                console.log('Post created successfully.');
+                // Clear the input fields or perform any other necessary actions
+                setPost({
+                    writeUp: '',
+                    imageUrl: '',
+                });
+            } else {
+                console.error('Failed to create post.');
+            }
+        } catch (error) {
+            console.error('Error creating post:', error);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -34,6 +65,7 @@ function CreatePost() {
                 formData.append('file', imageFile);
                 formData.append('img-type', 'OTHER');
 
+                // Upload the image and get the image ID
                 const imageUploadResp = await api.post('/image', formData, {
                     headers: {
                         Authorization: 'Bearer ' + authState.token,
@@ -42,29 +74,24 @@ function CreatePost() {
                 });
 
                 if (imageUploadResp.status === 200) {
-                    const imageId = imageUploadResp.data.id; // Assuming the URL field is 'url'
+                    const imageId = imageUploadResp.data.id;
                     console.log(imageId);
 
+                    // Set the image URL in the post data
                     setPost({
                         ...post,
                         imageUrl: imageId,
                     });
-
-
                 }
             }
 
-            // Send a POST request to your API endpoint to create the post
-            const response = await api.post('/post',
-                post,
-                {headers: { Authorization: "Bearer " + authState.token }
-            });
-
-           console.log(response);
+            // If no image is selected, send the POST request without imageUrl
+            if (!imageFile && post.writeUp) {
+                createPost();
+            }
         } catch (error) {
             console.error('Error creating post:', error);
         }
-       //window.location.reload();
     };
 
     return (

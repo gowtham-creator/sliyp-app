@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faShare, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../css/posts.css';
 import api from "../api";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 function PostCard({ post }) {
     const [postImage, setPostImage] = useState(null);
@@ -12,7 +12,7 @@ function PostCard({ post }) {
     useEffect(() => {
         const fetchPostImage = async () => {
             try {
-                if (post.imageUrl) {
+                if (post.imageUrl && !postImage) { // Fetch image only if not already fetched
                     const imageResp = await api.get(`/image/${post.imageUrl}`, {
                         headers: { Authorization: "Bearer " + authState.token },
                         responseType: 'arraybuffer',
@@ -28,16 +28,16 @@ function PostCard({ post }) {
                     } else {
                         console.error('Empty or invalid image data received.');
                     }
-                } else {
-                    console.error('No profile image ID found in user data.');
+                } else if (!post.imageUrl) {
+                    console.error('No image URL found in post data.');
                 }
             } catch (error) {
-                console.error('Error fetching user profile:', error);
+                console.error('Error fetching post image:', error);
             }
         };
 
         fetchPostImage();
-    }, [authState.token]);
+    }, [authState.token, post, postImage]);
 
     return (
         <div className="post-card">
