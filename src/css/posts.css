@@ -78,3 +78,36 @@
 .post-actions button:hover {
     color: #0056b3;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+}
+
+.pagination span {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 16px;
+}
+
