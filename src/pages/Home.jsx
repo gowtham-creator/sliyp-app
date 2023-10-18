@@ -62,7 +62,7 @@ const Home = () => {
                                 {selectedView === 'GroupChat' && <ExternalWebsite />}
                                 {selectedView === 'Tasks' && <Tasks />}
                                 {selectedView === 'CodeEditor' && <CodeEditor />}
-                                {selectedView === 'UserProfile' && <UserProfile email='mallepally.shashikanthh@yahoo.com' />}
+                                {selectedView === 'UserProfile' && <UserProfile email={authState.name} />}
                             </>
                         ) : (
                             <div className='bg-primary text-white h-[40vh] py-8 text-center'>
