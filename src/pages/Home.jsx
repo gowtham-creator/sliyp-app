@@ -9,6 +9,7 @@ import UserList from "../components/UserList";
 import UserProfile from "../components/UserProfile";
 import PostList from "../components/PostList";
 import CodeEditor from "../components/CodeEditor";
+import AIFriend from "../components/AIFriend";
 
 const Home = () => {
     const authState = useSelector(state => state.authReducer);
@@ -52,6 +53,9 @@ const Home = () => {
                         <h2 className='text-lg mt-4'>
                             <button onClick={() => handleViewChange('CodeEditor')}> Code Editor</button>
                         </h2>
+                        <h2 className='text-lg mt-4'>
+                            <button onClick={() => handleViewChange('AIFriend')}> AI Friend</button>
+                        </h2>
                     </div>
                     <div className="w-3/4 p-4">
                         {isLoggedIn ? (
@@ -62,6 +66,7 @@ const Home = () => {
                                 {selectedView === 'GroupChat' && <ExternalWebsite />}
                                 {selectedView === 'Tasks' && <Tasks />}
                                 {selectedView === 'CodeEditor' && <CodeEditor />}
+                                {selectedView === 'AIFriend' && <AIFriend />}
                                 {selectedView === 'UserProfile' && <UserProfile email={authState.name} />}
                             </>
                         ) : (
