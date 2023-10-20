@@ -11,7 +11,7 @@ function AIFriend() {
     const [loading, setLoading] = useState(false);
     const [codeHighlightSettings, setCodeHighlightSettings] = useState({
         language: 'python',
-        style: stackoverflowDark,
+        style: solarizedlight,
         customStyle: { fontSize: '11px' },
         showLineNumbers: true,
         wrapLines: true,
