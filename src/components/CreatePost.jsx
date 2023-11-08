@@ -69,6 +69,7 @@ function CreatePost() {
                 const imageUploadResp = await api.post('/image', formData, {
                     headers: {
                         Authorization: 'Bearer ' + authState.token,
+                        "Content-Type":"multipart/form-data"
                     },
                     responseType: 'json',
                 });

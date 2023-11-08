@@ -2,74 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faShare, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../css/posts.css';
-import api from "../api";
-import { useSelector } from "react-redux";
+
 
 function PostCard({ post }) {
-    const [postImage, setPostImage] = useState(null);
-    const [userImage, setUserImage] = useState(null);
-    const authState = useSelector(state => state.authReducer);
-
-    useEffect(() => {
-        const fetchPostImage = async () => {
-            try {
-                if (post.imageUrl && !postImage) { // Fetch image only if not already fetched
-                    const imageResp = await api.get(`/image/${post.imageUrl}`, {
-                        headers: { Authorization: "Bearer " + authState.token },
-                        responseType: 'arraybuffer',
-                    });
-
-                    if (imageResp.data && imageResp.data.byteLength > 0) {
-                        // Convert binary data to base64
-                        const imageBytes = new Uint8Array(imageResp.data);
-                        const base64String = btoa(
-                            String.fromCharCode.apply(null, imageBytes)
-                        );
-                        setPostImage(`data:image/jpeg;base64,${base64String}`);
-                    } else {
-                        console.error('Empty or invalid image data received.');
-                    }
-                } else if (!post.imageUrl) {
-                    console.error('No image URL found in post data.');
-                }
-
-
-                if(post.AuthorProfileImgId && !userImage){
-                    const imageResp = await api.get(`/image/${post.AuthorProfileImgId}`, {
-                        headers: { Authorization: "Bearer " + authState.token },
-                        responseType: 'arraybuffer',
-                    });
-
-                    if (imageResp.data && imageResp.data.byteLength > 0) {
-                        // Convert binary data to base64
-                        const imageBytes = new Uint8Array(imageResp.data);
-                        const base64String = btoa(
-                            String.fromCharCode.apply(null, imageBytes)
-                        );
-                        setUserImage(`data:image/jpeg;base64,${base64String}`);
-                    } else {
-                        console.error('Empty or invalid image data received.');
-                    }
-                } else if (!post.AuthorProfileImgId) {
-                    console.error('No image URL found in post data.');
-                }
-
-
-            } catch (error) {
-                console.error('Error fetching post image:', error);
-            }
-        };
-
-        fetchPostImage();
-    }, [authState.token, post, postImage,userImage]);
 
     return (
         <div className="post-card">
             <div className="post-header">
                 <div className="user-info">
-                    {userImage ?
+                    {post.AuthorProfileImgUrl ?
                         (<img
-                        src={userImage}
+                        src={post.AuthorProfileImgUrl}
                         alt={`shashi's Icon`}
                         className="profile-image-small"
                     />): (<img
@@ -86,7 +29,7 @@ function PostCard({ post }) {
             <div className="post-content">
                 <p>{post.writeUp}</p>
                 {post.post && (
-                    <img src={postImage} alt="Post" className="post-image" />
+                    <img src={post.imageUrl} alt="Post" className="post-image" />
                 )}
                 {/* Display other post details as needed */}
             </div>
