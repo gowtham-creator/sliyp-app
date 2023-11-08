@@ -85,7 +85,7 @@ function PostCard({ post }) {
             </div>
             <div className="post-content">
                 <p>{post.writeUp}</p>
-                {postImage && (
+                {post.post && (
                     <img src={postImage} alt="Post" className="post-image" />
                 )}
                 {/* Display other post details as needed */}

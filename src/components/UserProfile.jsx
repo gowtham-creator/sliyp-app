@@ -7,8 +7,6 @@ function UserProfile({ email }) {
 
     const [userProfile, setUserProfile] = useState(null);
     const authState = useSelector(state => state.authReducer);
-    const [profileImage, setProfileImage] = useState(null);
-
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -17,29 +15,6 @@ function UserProfile({ email }) {
                     { headers: { Authorization: "Bearer " + authState.token } });
                 const userProfileData = response.data;
                 setUserProfile(userProfileData);
-
-
-                if (userProfileData.profileImgId) {
-                    const imageResp = await api.get(`/image/${userProfileData.profileImgId}`, {
-                        headers: { Authorization: "Bearer " + authState.token },
-                        responseType: 'arraybuffer',
-                    });
-
-                    if (imageResp.data && imageResp.data.byteLength > 0) {
-                        // Convert binary data to base64
-                        const imageBytes = new Uint8Array(imageResp.data);
-                        const base64String = btoa(
-                            String.fromCharCode.apply(null, imageBytes)
-                        );
-                        //console.log('Base64 Image String:', base64String);
-
-                        setProfileImage(`data:image/jpeg;base64,${base64String}`);
-                    } else {
-                        console.error('Empty or invalid image data received.');
-                    }
-                } else {
-                    console.error('No profile image ID found in user data.');
-                }
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
@@ -58,7 +33,9 @@ function UserProfile({ email }) {
         formData.append('file', file);
         formData.append('img-type','USER_PROFILE')
 
-        const imageUploadResp= await api.post('image', formData,{headers: { Authorization: "Bearer " + authState.token },
+        const imageUploadResp= await api.post('image', formData,{headers: { Authorization: "Bearer " + authState.token ,
+            "Content-Type": "multipart/form-data"
+            },
             responseType: 'arraybuffer',}, { showSuccessToast: true });
 
         console.log(imageUploadResp);
@@ -67,8 +44,8 @@ function UserProfile({ email }) {
     return (
         <div className="user-profile">
             <div className="profile-header" onClick={() => document.getElementById('image-input').click()}>
-                {profileImage ? (
-                    <img src={profileImage} alt="Profile" className="profile-image" />
+                {userProfile.profileImgUrl ? (
+                    <img src={userProfile.profileImgUrl} alt="Profile" className="profile-image" />
                 ) : (
                     <img src= "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="Default Profile" className="profile-image" />
                 )}
